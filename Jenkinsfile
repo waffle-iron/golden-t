@@ -9,7 +9,7 @@ node {
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-        app = docker.build("/r/bjnstad/golden")
+        app = docker.build("bjnstad/golden")
     }
 
     stage('Test image') {
@@ -26,7 +26,7 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://hub.docker.com', 'docker-hub-credentials') {
+        docker.withRegistry('https://hub.docker.com/r/', 'docker-hub-credentials') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
